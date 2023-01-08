@@ -78,6 +78,7 @@ def find_pivot(col: sp.Matrix) -> int:
 
 
 def pivot(mat: sp.Matrix, perm: dict[str, sp.Matrix], j: int, output: bool = False) -> int:
+    swaped = False
     col = abs(mat[j:, j])
     max_idx = find_pivot(col)
 
@@ -86,6 +87,7 @@ def pivot(mat: sp.Matrix, perm: dict[str, sp.Matrix], j: int, output: bool = Fal
         prev_matrix = sp.latex(mat) + ' \\; ' + perm_str
 
         swap_row(mat, j, j + max_idx)
+        swaped = True
         for p in perm.values():
             swap_row(p, j, j + max_idx)
 
@@ -95,3 +97,4 @@ def pivot(mat: sp.Matrix, perm: dict[str, sp.Matrix], j: int, output: bool = Fal
             dp.display(dp.Math(
                 f'\\text{{pivot: swapping rows {j + 1} and {j + max_idx + 1} in }}{prev_matrix} \\text{{ gives }}' +
                 sp.latex(mat) + ' \\; ' + perm_str))
+    return swaped

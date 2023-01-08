@@ -5,6 +5,7 @@ from util import backwards_substitution, pivot
 
 
 def gauss(a: sp.Matrix, b: sp.Matrix, pivoting: bool = False, output: bool = False) -> sp.Matrix:
+    swaped_rows_counter = 0
     if output:
         dp.display(dp.Math(f'A = {sp.latex(a)}, \\quad b = {sp.latex(b)}'))
         dp.display(dp.Markdown('## Gauss'))
@@ -15,7 +16,8 @@ def gauss(a: sp.Matrix, b: sp.Matrix, pivoting: bool = False, output: bool = Fal
 
     for k in range(n - 1):
         if u[k, k].is_zero or pivoting:
-            pivot(u, {'b': b}, k, output=output)
+            if(pivot(u, {'b': b}, k, output=output)):
+                swaped_rows_counter += 1
 
         for i in range(k + 1, n):
             if not u[i, k].is_zero:
@@ -29,7 +31,18 @@ def gauss(a: sp.Matrix, b: sp.Matrix, pivoting: bool = False, output: bool = Fal
                             u) + ' \\; ' + sp.latex(b)))
 
     if output:
-        dp.display(dp.Markdown('## Rückwärtseinsetzen'))
+        dp.display(dp.Markdown('## Determinante'))
+        det_calc = ('det(A) = (-1)^' + str(swaped_rows_counter) + " * ")
+        for i in range(n):
+            det_calc += (' ' + str(u[i, i]) + ' ')
+            if(i != n-1):
+                det_calc += ' * '
+            else:
+                det_calc += (' = ' + str(a.det()))
+        dp.display(dp.Math(det_calc))
+
+        dp.display(dp.Markdown('## Rückwärtasdasdasfseinsetzen'))
+
 
     x = backwards_substitution(u, b, symbol='x', output=output)
 
