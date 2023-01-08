@@ -34,7 +34,7 @@ def gauss(a: sp.Matrix, b: sp.Matrix, pivoting: bool = False, output: bool = Fal
         dp.display(dp.Markdown('## Determinante'))
         det_calc = ('det(A) = (-1)^' + str(swaped_rows_counter) + " * ")
         for i in range(n):
-            det_calc += (' ' + str(u[i, i]) + ' ')
+            det_calc += (' (' + str(u[i, i]) + ') ')
             if(i != n-1):
                 det_calc += ' * '
             else:
